@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Backbone.js Models</title>
+<link rel="stylesheet" href="css/demos.css">
+</head>
+<body>
+
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/underscore-1.4.4.js"></script>
+<script src="js/backbone-0.9.10.js"></script>
+<script>
+
+var Car = Backbone.Model.extend();
+
+var car = new Car({
+  name: 'DeLorean DMC-12',
+  manufactured: 1981
+});
+
+console.log( car.get('name') );
+car.set({ manufactured: 1982 });
+console.log( car.get('manufactured') );
+
+</script>
+
+</body>
+</html>

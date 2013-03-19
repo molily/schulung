@@ -1,0 +1,24 @@
+body {
+  margin: 3em;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+}
+
+#content, #results {
+  padding: 0 2em;
+  border: 1px solid #ccc;
+}
+
+#results {
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
+
+#results img {
+  display: inline-block;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  vertical-align: middle;
+  max-width: 120px;
+  max-height: 90px;
+}

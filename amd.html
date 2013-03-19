@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AMD &amp; Require.js</title>
+<link rel="stylesheet" href="css/demos.css">
+</head>
+<body>
+<h1>AMD &amp; Require.js</h1>
+
+<div id="output"></div>
+
+<script src="js/require-2.1.5.js"></script>
+<script>
+// Configure the AMD module loader
+requirejs.config({
+  // The path where your JavaScripts are located
+  baseUrl: 'js/',
+  // Specify the paths of vendor libraries
+  paths: {
+    jquery: 'jquery-1.9.1',
+  }
+});
+
+// Load dependencies
+require(['hello_amd'], function (HelloAMD) {
+  HelloAMD.sayHello();
+});
+</script>
+</body>
+</html>

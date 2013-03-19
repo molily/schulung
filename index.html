@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="de">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>JavaScript-Workshop</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+  </head>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+<!-- ******************************************************************** -->
+
+<section>
+<h1>JavaScript</h1>
+<svg width="400" height="400" viewBox="0 0 630 630">
+  <rect x="0" y="0" width="100%" height="100%" fill="#f7df1e" />
+  <path d="m 165.65,526.47375 48.2125,-29.1775 C 223.16375,513.7875 231.625,527.74 251.92,527.74 c 19.45375,0 31.71875,-7.60975 31.71875,-37.21 l 0,-201.3 59.20375,0 0,202.1375 c 0,61.32 -35.94375,89.23125 -88.385,89.23125 -47.36125,0 -74.8525,-24.52875 -88.8075,-54.13" />
+  <path d="m 375,520.13 48.20625,-27.91125 c 12.69,20.72375 29.1825,35.9475 58.36125,35.9475 24.53125,0 40.17375,-12.26475 40.17375,-29.18125 0,-20.29875 -16.06875,-27.48875 -43.135,-39.32625 l -14.7975,-6.3475 c -42.715,-18.18125 -71.05,-41.0175 -71.05,-89.2275 0,-44.40375 33.83125,-78.2375 86.695,-78.2375 37.6375,0 64.7025,13.11125 84.15375,47.36625 l -46.09625,29.60125 c -10.15,-18.1825 -21.1425,-25.37125 -38.0575,-25.37125 -17.33875,0 -28.335,10.995 -28.335,25.37125 0,17.7625 10.99625,24.9525 36.3675,35.94875 l 14.8,6.3425 c 50.325,21.56875 78.66,43.5575 78.66,93.03375 0,53.2875 -41.86625,82.465 -98.11,82.465 -54.97625,0 -90.5,-26.2175 -107.83625,-60.47375" />
+</svg>
+</section>
+
+<section data-markdown>
+# Mathias Schäfer
+
+- Software-Entwickler bei 9elements
+- Studium der Germanistik und Philosophie an der RUB
+- Spezialisiert auf Frontend-Techniken HTML, CSS und JavaScript
+- Autor von <a href="http://molily.de/weblog/artikel">Fachartikeln</a> und <a href="http://molily.de/js/">Dokumentationen</a> (u.a. SELFHTML, Webkrauts)
+- Über 10 Jahre JavaScript-Erfahrung
+- Initiator und Maintainer von <a href="http://chaplinjs.org">Chaplin.js</a>
+</section>
+
+<section data-markdown>
+# <a href="http://9elements.com">9elements</a>
+
+- Bochum &amp; Berlin
+- Design, Interfaces, Programmierung
+- früher Flash, VJing
+- Webanwendungen mit Ruby on Rails
+- HTML5- und JavaScript-Apps
+- iOS- und Android-Entwicklung
+</section>
+
+<section data-markdown>
+# Programm
+1. Sprachgrundlagen
+2. JavaScript in HTML, jQuery
+3. Strukturierung: OOP und funktionale Programmierung
+4. Anwendungen mit Backbone.js und Chaplin.js
+</section>
+
+<section data-markdown>
+# Werkzeuge
+
+- Editor (Zend Studio, Sublime, WebStorm)
+- Browser mit Konsole und Debugger (Chrome/Web Inspector, Firefox/Firebug)
+- Webserver (Apache, nginx)
+- Git und das Schulungs-Repository
+- EtherPad
+</section>
+
+<section data-markdown>
+# Ablauf
+
+- Vortrag mit Fragen und Antworten
+- Aufgaben und Beispiele
+- Umsetzungen besprechen, Refactoring
+- Mitmachen und Ausprobieren auf der Konsole
+</section>
+
+<!-- ******************************************************************** -->
+
+<section data-markdown>
+# Was ist JavaScript?
+- Eine interpretierte, dynamische, multiparadigmatische, universell einsetzbare Programmiersprache
+- Schwach und dynamisch typisiert
+- Durch Lisp und Schema beeinflusst
+</section>
+
+<section data-markdown>
+# Geschichte
+- Netscape Navigator 2.0, 1995
+- Scripting im Web-Browser
+- Beginn des kommerziellen, allgemein zugänglichen WWW
+- Usprünglich zum Scripting von Java-Applets konzipiert
+- »Java is to JavaScript as ham is to hamster«
+</section>
+
+<section data-markdown>
+# Entwicklung
+- Andere Browser implementierten JavaScript
+- Standardisierung als ECMAScript
+  - Edition 1: 1997
+  - Edition 5.1: 2011
+  - Edition 6: in Entwicklung
+- Standardisierung der Browser-APIs
+- Buzzwords: DHTML, Ajax, HTML5…
+</section>
+
+<section data-markdown>
+# Verbreitung
+- Open-Web-Plattform<br><small>(HTML, CSS, JavaScript, DOM, HTTP, XML, JSON, SVG, PNG, JPEG etc.)</small>
+- Node.js, CommonJS-Implementierungen
+- webOS, Firefox OS
+- Desktop-Widgets, Windows-8-Apps
+</section>
+
+<section data-markdown>
+# Heutiger Stand
+- JavaScript ist überall und gewinnt an Einfluss
+- »The World’s Most Popular Programming Language«
+- Ausgereifte Interpreter von Apple, Microsoft, Google, Mozilla, Opera
+- Davon mehrere Open Source (V8, SpiderMonkey, JavaScriptCore, Rhino)
+</section>
+
+<section data-markdown>
+# Standards
+
+- ECMAScript (<a href="http://es5.github.com">es5.github.com</a>)
+- W3C (<a href="http://w3.org">w3.org</a>)
+  - <a href="http://www.w3.org/TR/html5/">HTML WG</a>, <a href="http://www.w3.org/2008/webapps/wiki/PubStatus">WebApps WG</a> usw.
+  - Community Groups
+- WHATWG (<a href="http://www.whatwg.org/specs/">whatwg.org</a>)
+  - <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/">HTML, DOM</a> usw.
+- <a href="http://molily.de/weblog/html5-specs">Übersicht</a>
+</section>
+
+<section data-markdown>
+# JavaScript-Grundlagen
+
+<pre><code contenteditable class="javascript">window.alert("Hello World!");</code></pre>
+</section>
+
+<section data-markdown>
+# JavaScript-Grundlagen
+
+<pre><code contenteditable class="javascript">window.alert("Hello World!");</code></pre>
+
+- Objekt `window`
+- Eigenschaft `alert`
+- Eigenschaftswert: Funktion
+- Funktionsaufruf `()`
+- String-Literal `"Hello World!"` als Funktionsparameter
+- Semikolon am Zeilenende
+</section>
+
+<section data-markdown>
+# Syntax
+
+Programmcode besteht aus…
+
+1. Statements (u.a. Kontrollstrukturen)
+2. Expressions (Ausdrücke)
+3. Bezeichner, Literale und Operatoren
+
+vgl. Text – Abschnitt – Satz – Satzglied –<br>Wort – Morphem – Buchstabe
+</section>
+
+<section data-markdown>
+# Statements
+
+- »Expression Statements« (Ausdrücke)
+  - `window.alert("Hello World!");`
+- Variablen-Deklarationen
+- Bedingte Anweisungen (if-else, switch)
+- Schleifen (while, do-while, for, for-in; continue, break)
+- Ausnahmebehandlung (try-catch-finally/throw)
+</section>
+
+<section data-markdown>
+# Variablen
+
+<pre><code contenteditable class="javascript">var one = 1;
+var two = 2;
+var three = one + two,
+    four = 4,
+    result = three + four;
+alert(result);
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Variablen
+
+Globale Variablen sind Eigenschaften des globalen Objekts `window`:
+
+<pre><code contenteditable class="javascript">var one = 1;
+alert(one); // 1
+alert(window.one); // 1
+</code></pre>
+
+Gundregel: Globale Variablen vermeiden.
+
+JSLint/JSHint warnt vor globalen Variablen.
+</section>
+
+<section data-markdown>
+# Schleifen und Bedingungen
+
+<pre><code contenteditable class="javascript">var ausgabe;
+for (var i = 1; i <= 10; i++) {
+  if (i % 2 == 0) {
+    ausgabe = "gerade";
+  } else {
+    ausgabe = "ungerade";
+  }
+  alert(i + " ist " + ausgabe);
+}
+</code></pre>
+
+<pre><code contenteditable class="javascript">var name = "";
+while (name == "") {
+  name = window.prompt("Wie ist ihr Name?");
+}</code></pre>
+
+</section>
+
+<section data-markdown>
+# Syntax verstehen
+
+Abstrakte Syntaxbäume (AST)
+
+<pre><code contenteditable class="javascript">window.alert("Hello World!");</code></pre>
+
+<pre><code contenteditable>Program
+  ExpressionStatement
+    CallExpression
+      MemberExpression
+        Identifier: window
+        Identifier: alert
+      arguments:
+        Literal: "Hello World!"
+</code></pre>
+
+Bspw. <a href="http://esprima.org/demo/parse.html?code=window.alert(%22Hello%20World!%22)%3B">Esprima ECMAScript parser</a>
+
+</section>
+
+<section data-markdown>
+# Funktionen
+
+Funktionsausdruck (Function Expression)
+
+<pre><code contenteditable<code contenteditable class="javascript">var add = function (a, b) {
+  return a + b;
+};
+var sum = add(2, 3);
+</code></pre>
+
+Funktionsdeklaration (Function Declaration)
+
+<pre><code contenteditable class="javascript">var sum = add(2, 3);
+function add (a, b) {
+  return a + b;
+}
+</code></pre>
+
+Viele Fallstricke, daher besser vermeiden.
+
+</section>
+
+<section data-markdown>
+# Funktionen
+
+<pre><code contenteditable class="javascript">var add = function (a, b) {
+  return a + b;
+};
+var sum = add(2, 3);
+</code></pre>
+
+Einfacher und konsistenter
+</section>
+
+<section data-markdown>
+# Programmieraufgabe
+
+Schreiben Sie eine Funktion, die eine positive ganze Zahl entgegennimmt und die Summe der ganzen Zahlen von 1 bis zur gegebenen Zahl zurückgibt.
+
+Beispiel: 5
+
+1 + 2 + 3 + 4 + 5 = 15
+</section>
+
+<section data-markdown>
+# Umsetzungshilfe
+
+- Funktion mit Parameter n
+- Variable für Ergebnis
+- Schleife, die von 1 bis n zählt
+- Addition
+- Rückgabewert
+</section>
+
+<section data-markdown>
+# Mögliche Lösung
+
+<pre><code contenteditable class="javascript">var sum = function (n) {
+  var result = 0;
+  for (var i = 1; i <= n; i++) {
+    result += i;
+  }
+  return result;
+};
+alert( sum(5) );
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Lokale Variablen
+
+<pre><code contenteditable class="javascript">var max = function (list) {
+  var i, l = list.length, biggest = 0, candidate;
+  for (i = 0; i < l; i++) {
+    candidate = list[i];
+    if (candidate > biggest) {
+      biggest = candidate;
+    }
+  }
+  return biggest;
+};
+alert( max( [65, 24, 98, 44] ) ); // 98
+alert(biggest); // ReferenceError: max is not defined
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Grundlegende Datentypen
+- Einfache Werte (Primitives)
+  - Boolean, Number, String
+  - `undefined`, `null`
+- Object
+- Array
+- Function
+- RegExp, Date
+</code></pre>
+</section>
+
+<section data-markdown>
+# Einfache Werte
+- Boolean: `true`, `false`
+- Number: `0`, `1`, `2`, `3.75`, `-56.1`, `1e6`, `0x10`
+- String: `"Hühnerstall"`, `'Motorrad'`
+</section>
+
+<section data-markdown>
+# Einfache Werte
+
+Verhalten sich wie Objekte, besitzen Methoden:
+
+<pre><code contenteditable class="javascript">(2.5172).toFixed(2) // 2.52
+"Hello World".indexOf("World") // 6
+"Hello World".charAt(6) // "W"
+"Hello World".substring(6, 11) // "World"
+"Hello World".replace("World", "there") // "Hello there"
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Arrays
+
+Listen von Werten beliebigen Typs
+
+<pre><code contenteditable class="javascript">var array = [1, 2, 3];
+alert(array); // 1,2,3
+alert(array.join(',')); // 1,2,3
+alert(array.length); // 3
+alert(array[0]); // 1
+alert(array.indexOf(3)); // 2
+</code></pre>
+</section>
+
+<section data-markdown>
+# Arrays
+<pre><code contenteditable class="javascript">var array = [1, 2, 3];
+// Iteration mit for-Schleife
+for (var i = 0, l = array.length; i < l; i++) {
+  alert(i + ": " + array[i]);
+}
+// Iteration mit Callback-Funktion
+array.forEach(function (el, i, array) {
+  alert(i + ": " + el);
+});
+// Listenoperationen (map, filter, reduce…)
+var newArray = array.filter(function (el) {
+  return el > 1;
+});
+alert(newArray); // 2,3
+</code></pre>
+</section>
+
+<section data-markdown>
+# Objekt-Literale
+<pre><code contenteditable class="javascript">var objekt = {
+  eigenschaft: wert,
+  property: value,
+  …
+};
+alert(objekt.eigenschaft);
+objekt.eigenschaft = …;
+objekt.neueEigenschaft = …;
+delete objekt.eigenschaft;
+</code></pre>
+Hashes / Hash Maps / assoziative Arrays
+</section>
+
+<section data-markdown>
+# Objekte
+- Alles in JavaScript ist oder verhält sich wie ein Objekt
+- Alle Objekte verhalten sich gleich
+- Die meisten Objekte sind veränderbar
+  - Neue Eigenschaften können angelegt oder gelöscht werden
+  - Eigenschaften sind schreibbar
+- Objekte sind sowohl Arbeitsdaten als auch Programmstruktur
+</section>
+
+<section data-markdown>
+# Objekt-Literale
+<pre><code contenteditable class="javascript">var person = {
+  name: 'Mathias',
+  postcode: 44793,
+  employer: '9elements',
+  languages: ['JavaScript', 'Ruby'],
+  greet: function () {
+    alert('Hallo von ' + this.name);
+  }
+};
+person.greet();
+</code></pre>
+Eines der mächtigsten Features von JavaScript
+</section>
+
+<section data-markdown>
+# JSON
+
+JavaScript Object Notation
+
+Untermenge von JavaScript
+
+<pre><code contenteditable class="javascript">[
+  { "name": "Mathias", "postcode": 44793,
+    "languages": [ "JavaScript", "Ruby" ] },
+  { "name": "Lena", "postcode": 10711,
+    "languages": [ "Objective-C", "Java" ] }
+]
+</code></pre>
+
+
+`JSON.stringify()` und `JSON.parse()`
+
+</section>
+
+<section data-markdown>
+# Referenzen
+
+- <a href="https://developer.mozilla.org/en-US/docs/JavaScript">Mozilla Developer Network (MDN)</a>
+- <a href="http://msdn.microsoft.com/en-us/library/yek4tbz0(v=vs.94).aspx">Microsoft Developer Network (MSDN)</a>
+- <a href="http://de.selfhtml.org/javascript/objekte/">SELFHTML</a> (lückenhaft, aber Grundlagen)
+
+</section>
+
+<!-- ******************************************************************** -->
+
+<section data-markdown>
+# JavaScript in HTML
+
+<pre><code contenteditable class="html">&lt;script>
+window.alert("Hello World!");
+&lt;/script>
+</code></pre>
+
+<pre><code contenteditable class="html">&lt;script src="script.js">&lt;/script>
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# JavaScript in HTML5
+
+<pre><code contenteditable class="html">&lt;!DOCTYPE html>
+&lt;html lang="de">
+  &lt;head>
+    &lt;meta charset="utf-8">
+    &lt;title>Titel&lt;/title>
+    &lt;link rel="stylesheet" src="style.css">
+  &lt;/head>
+  &lt;body>
+    &lt;h1>Titel&lt;/h1>
+    &lt;p>Inhalt&lt;/p>
+    &lt;script src="script.js">&lt;/script>
+  &lt;/body>
+&lt;/html>
+</code></pre>
+
+»Put Stylesheets at the Top,<br>Put Scripts at the Bottom«
+
+</section>
+
+<section data-markdown>
+# JavaScript im Browser
+- Kernobjekte aus ECMAScript
+- Fenster (`window`)
+- Dokumente (`window.document`)
+- DOM-Knotenbaum (u.a. HTML-Elemente)
+- Entwicklertools wie Firebug und DOM Inspector verwenden
+</section>
+
+<section data-markdown>
+# DOM
+
+- Document Object Model
+- Die JavaScript-Schnittstelle zum HTML-Dokument, in dem das Script läuft
+- Ein Baum von Knoten (Elemente, Text, Kommentare usw.)
+</section>
+
+<section data-markdown>
+# DOM
+
+<pre><code contenteditable class="html">&lt;p id="content">Hello World&lt;/p>
+</code></pre>
+
+<pre><code contenteditable class="javascript">var el = document.getElementById('content');
+alert(el.nodeName); // P
+alert(el.childNodes.length); // 1
+alert(el.innerHTML); // Hello World
+el.innerHTML = 'Hallo Welt!';
+</code></pre>
+
+<pre><code contenteditable class="javascript">var strong = document.createElement('strong');
+var text = document.createTextNode('Hallo Welt!');
+strong.appendChild(text);
+el.appendChild(strong);
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# jQuery (<a href="http://jquery.com">jquery.com</a>)
+- Ausgereiftes Standardtool für DOM- und Ajax-Operationen
+- Das DOM ist umständlich und Low-Level
+- jQuery bietet eine kompakte Syntax und ist browserübergreifend
+</section>
+
+<section data-markdown>
+# Vorteile von jQuery
+- Schneller Einstieg
+- Knapper, verständlicher Code
+- Häufige Aufgaben einfach lösen
+- Etablierte gute Konventionen und vereinheitlicht Code
+- Zahlreiche Erweiterungen (Plugins)
+</section>
+
+<section data-markdown>
+# Grenzen von jQuery
+
+- Deckt nur einen kleinen Bereich ab
+- jQuery-Code skaliert nicht, wird schlecht wartbar
+- jQuery bietet (fast) nichts zur Strukturierung
+- Umfangreich und komplex
+</section>
+
+<section data-markdown>
+# jQuery-Features
+- Elemente mittels CSS-Selektoren finden
+- DOM-Traversal (Bewegen im DOM-Baum)
+- DOM-Manipulation (Elemente einfügen, Inhalte wechseln, Attribute setzen)
+- CSS-Eigenschaften ändern, CSS-Animationen
+- Event-Handling (z.B. Maus- und Tastaturevents), Event-Delegation
+- HTTP-Anfragen an Server senden (Ajax)
+</section>
+
+<section data-markdown>
+# jQuery-Grundlagen
+
+`$("#content")`
+
+- findet das Element mit der ID `content`
+- gibt ein `jQuery`-Objekt zurück
+- das ist eine Liste mit Elementobjekten (DOM-Knoten)
+- `$()` ist kurz für `jQuery()`
+</section>
+
+<section data-markdown>
+# jQuery-Beispiel
+
+<pre><code contenteditable class="html">&lt;p id="content">Hello World&lt;/p>
+</code></pre>
+
+<pre><code contenteditable class="html">&lt;script>
+alert( $('#content').length ); // 1
+alert( $('#content')[0] ); // [object HTMLParagraphElement]
+&lt;/script>
+</code></pre>
+
+jQuery wrappt Elementobjekte in eine Listenobjekt mit vielen nützlichen Methoden
+</section>
+
+<section data-markdown>
+# jQuery-Beispiel
+
+<pre><code contenteditable class="html">&lt;p id="content">Hello World&lt;/p>
+</code></pre>
+
+<pre><code contenteditable class="javascript">alert( $('#content').html() ); // Hello World
+$('#content').html('Hallo Welt!');
+</code></pre>
+
+<pre><code contenteditable class="javascript">$('#content').click(function () {
+  $(this).html(text);
+});
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Beispiel: Bildergalerie
+
+- Bildersuche bei Flickr
+- Thumbnail-Liste
+- Vollansicht bei Klick
+</section>
+
+<section data-markdown>
+# Beispiel: Bildergalerie
+
+1. GET-Request auf die JSON-API von Flickr
+  - `ajax()` oder `getJSON()`
+2. HTML für Ergebnisse zusammenbauen und ins DOM einfügen
+  - `html()` oder `append()`
+3. Vollansicht bei Klick
+  - `html()`, `click()`
+</section>
+
+<section data-markdown>
+# Helferlein
+
+- <a href="http://api.jquery.com">api.jquery.com</a>
+- <a href="http://jqapi.ru/">jqapi.ru</a>
+- <a href="http://oscarotero.com/jquery/">oscarotero.com/jquery/</a>
+- <a href="http://developer.mozilla.org">developer.mozilla.org</a>
+- Debugger und Konsolen von Firebug und Web Inspector
+- Debugging mit `alert('…');` und `console.log('…');`
+</section>
+
+<!-- ******************************************************************** -->
+
+<section data-markdown>
+# JavaScripte strukturieren
+## Objektorientierte und funktionale Programmierung
+</section>
+
+<section data-markdown>
+# Strukturierung
+- ECMAScript 3 hat keine Klassen, Interfaces, Module, Traits, Mixins, Sichtbarkeit
+- ECMAScript 3 hat Objekte, Funktionen, Konstruktoren, Prototypen
+</section>
+
+<section data-markdown>
+# Neuere Standards
+- ECMAScript 5 hat Getter/Setter, einfache Zugriffsrechte (Property Descriptors)
+- ECMAScript 6 bekommt Module, Klassen als »Syntaxzucker«, private Eigenschaften, Proxies für Metaprogrammierung uvm.
+</section>
+
+<section data-markdown>
+# Strukturierung
+- ECMAScript 3 als Grundlage
+- Module, Kapselung, Vererbung (Delegation), Pseudo-Klassen, Objekt-Komposition
+- Imperativ statt deklarativ
+- Konventionen und Code statt festen Sprachfeature
+- Viele Möglichkeiten
+</section>
+
+<section data-markdown>
+# Revealing Module Pattern
+
+<pre><code contenteditable class="javascript">var modul = (function () {
+  var privateVariable = 1;
+  var privateFunktion = function () {…};
+  return {
+    öffentlicheEigenschaft: 1,
+    öffentlicheMethode: function () {…}
+  };
+})();
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Revealing Module Pattern
+
+- Funktions-Scope für private Daten und Funktionen
+- Selbstausführende Funktion mit Closures
+- Gibt einen Object-Literal mit öffentlichen Eigenschaften und Methoden zurück
+
+<a href="module-pattern.html" target="_blank">Demonstration</a>
+</a>
+
+</section>
+
+<section data-markdown>
+# Prototypen
+- Jedes Objekt hat einen Prototypen-Verweis
+- Der Prototyp ist ein normales Objekt
+- Wenn eine Eigenschaft nicht gefunden wird, wird sie beim Prototypen gesucht (Delegation)
+- So bekommen Objekte die Fähigkeiten beliebig vieler anderer Objekte
+</section>
+
+<section data-markdown>
+# Prototypen
+
+- JavaScript basiert intern auf Prototypen
+- Die meisten Objekte erben ihre Methoden von Prototypen
+- Die Prototypen der Kernobjekte sind lesbar und erweiterbar
+- <small>`Object.prototype, Function.prototype, Array.prototype, String.prototype, HTMLDocument.prototype, HTMLElement.prototype` usw.</small>
+</section>
+
+<section data-markdown>
+# Prototypische Delegation
+
+Wie erzeuge ich ein Objekt, das an ein anderes delegiert?
+
+- Funktion, deren `prototype`-Eigenschaft und der `new`-Operator (ES3)
+- `Object.create()` (ES5)
+</section>
+
+<section data-markdown>
+# Prototypen
+
+Wie bekomme ich den Prototyp eines Objekts?
+
+- `obj.constructor.prototype` (ECMAScript 3)
+- `Object.getPrototypeOf(obj)` (ES5)
+- `obj.__proto__` (ES6, bereits viele Browser)
+
+In der ECMAScript-Spezifikation `[[Prototype]]` genannt.
+</section>
+
+<section data-markdown>
+# Prototypische Delegation
+
+<pre><code contenteditable class="javascript">var o1 = { name: 'o1' };
+// Erzeuge ein leeres Objekt, das o1 als Prototyp hat
+var o2 = Object.create(o1);
+
+// o2 hat keine Eigenschaft »name«, delegiert an o1
+alert(o2.name); // o1
+alert(o2.hasOwnProperty("name")); // false
+
+o2.name = "o2";
+// o2 hat nun eine Eigenschaft »name«
+alert(o2.name); // o2
+alert(o2.hasOwnProperty("name")); // true
+</code></pre>
+</section>
+
+<section data-markdown>
+# Prototypenkette
+
+Ein Objekt hat einen Prototyp. Der Prototyp hat einen Prototyp usw. bis zum obersten Prototyp `Object.prototype`.
+
+<pre><code contenteditable class="javascript">var o1 = { name: 'o1' };
+var o2 = Object.create(o1);
+o2.__proto__ === o1
+o1.__proto__ === Object.prototype
+</code></pre>
+
+o2 &rarr; o1 &rarr; Object.prototype
+
+<pre><code contenteditable class="javascript">var str = "Hallo Welt!";
+str.__proto__ === String.prototype
+String.prototype.__proto__ === Object.prototype
+</code></pre>
+
+str &rarr; String.prototype &rarr; Object.prototype
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Prototypen verstehen
+
+<object type="image/svg+xml" data="images/prototypen-optimiert.svg" width="540" height="460"></object>
+
+<a href="http://molily.de/js/organisation-instanzen.html">JavaScript-Dokumentation</a>
+
+</section>
+
+<section data-markdown>
+# Prototypen
+
+Die Kern-Prototypen sind erweiterbar:
+
+<pre><code contenteditable class="javascript">Array.prototype.max = function () {
+  var i, l = this.length, biggest = 0, candidate;
+  for (i = 0; i < l; i++) {
+    candidate = this[i];
+    if (candidate > biggest) {
+      biggest = candidate;
+    }
+  }
+  return biggest;
+};
+alert([6, 2, 9, 3].max());
+</code></pre>
+
+Konflikte sind vorprogrammiert
+
+</section>
+
+<section data-markdown>
+# Pseudoklassen
+
+- JavaScript hat keine Unterscheidung zwischen festen Typen und Exemplaren
+- JavaScript kennt nur einfache, erweiterbare Objekte, die delegieren können
+- Prototypische Delegation ist vielseitiger
+- In der Anwendungsentwicklung wird mit Pseudoklassen gearbeitet
+- Einfachvererbung, Konstruktoren, Destruktoren, Super-Calls
+</section>
+
+<section data-markdown>
+# Pseudoklassen
+
+Konstruktoren, Prototypen, Instanzen
+
+<pre><code contenteditable class="javascript">var Person = function (name) {
+  this.name = name;
+};
+
+Person.prototype.greet = function () {
+  alert("Hello, my name is " + this.name + "!");
+};
+
+var alice = new Person("Alice");
+alice.greet();
+</code></pre>
+
+alice &rarr; Person.prototype &rarr; Object.prototype
+</section>
+
+<section data-markdown>
+# Konstruktoren
+
+<pre><code contenteditable class="javascript">var Person = function (name) {
+  this.name = name;
+};
+</code></pre>
+
+- Konstruktoren sind normale Funktionen
+- Über Konstruktoren lassen sich Typen definieren
+- Konstruktoren sind Objektfabriken, sie erzeugen gleichförmige Objekte
+</section>
+
+<section data-markdown>
+# Konstruktoren
+
+<pre><code contenteditable class="javascript">var Person = function (name) {
+  this.name = name;
+};
+</code></pre>
+
+Konvention: Konstruktoren beginnen mit einem Großbuchstaben, um sie von normalen Funktionen zu unterscheiden
+</section>
+
+<section data-markdown>
+# Konstruktor.prototype
+
+<pre><code contenteditable class="javascript">Person.prototype.greet = function () {
+  alert("Hello, my name is " + this.name + "!");
+};</code></pre>
+
+- Jede Funktion hat eine Eigenschaft `prototype`
+- Das ist ein einfaches, erweiterbares Objekt
+- Definition von Methoden und Eigenschaften
+</section>
+
+<section data-markdown>
+# Instanzen erzeugen
+
+<pre><code contenteditable class="javascript">var alice = new Person("Alice");
+alice.greet();
+</code></pre>
+
+- Ein Aufruf des Konstruktors mit dem `new`-Operator erzeugt eine Instanz
+- Erzeugt ein neues Objekt, das `Konstruktor.prototype` als Prototyp hat
+- alice &rarr; Person.prototype
+- `alice.greet` kommt vom Prototypen
+</section>
+
+<section data-markdown>
+# Prototypenkette
+<img src="images/prototypenkette.png" alt="">
+<a href="pseudoklassen.html" target="_blank">Siehe Web Inspector</a>
+</section>
+
+<section data-markdown>
+# Schlüsselwort this
+
+- `this` hat viele Bedeutungen
+- Außerhalb von Funktionen: `window`
+- Innerhalb von Funktionen: Hängt von der Aufrufweise der Funktion ab.
+
+<pre><code contenteditable class="javascript">var f = function () { alert(this); };
+var o = { f: f };
+f();   // window bzw. undefined im Strict-Mode
+o.f(); // o
+</code></pre>
+
+- Der Strict-Mode sorgt dafür, dass `this` nicht plötzlich `window` ist.
+</section>
+
+<section data-markdown>
+# Programmieraufgabe
+
+Schreiben Sie eine Klasse `Robot`, die die Methoden `stepForward`, `turnLeft`, `turnRight` und `showLog` implementiert. Die ersten drei speichern die Bewegung intern und geben eine Bestätigung aus. Die Methode `showLog` gibt auf der Konsole eine Liste aller aufgezeichneten Bewegungen aus. (Keine Visualisierung.)
+</section>
+
+<section data-markdown>
+# Tipps
+
+- Konstruktor `Robot`
+- `Robot.prototype.methode = function () {…};`
+- Eigenschaft `this.log = [];`
+- Methoden fügen Aktionen zum Log hinzu: `this.log.push('action');`
+- Ausgabe mit `console.log(this.log.join(', '));`
+
+<a href="pseudoklassen-emma.html" target="_blank">Beispiellösung</a>
+</section>
+
+<section data-markdown>
+# Pseudoklassen
+
+- Warum ist das so umständlich mit Konstruktoren, `prototype` und `new`?
+- <q>The pseudoclassical form can provide comfort to programmers who are unfamiliar with JavaScript, but it also hides the true nature of the language.</q><br>– <cite>Douglas Crockford: JavaScript. The Good Parts</cite>
+- Verzicht auf Konstruktoren zugunsten von <a href="http://uxebu.com/blog/2011/02/23/object-based-inheritance-for-ecmascript-5/">Object.create()</a>
+</section>
+
+<section data-markdown>
+# Literatur
+
+- Organisation von JavaScripten
+ - <a href="http://molily.de/js/organisation-instanzen.html">Konstruktoren, Prototypen und Instanzen</a>
+ - <a href="http://molily.de/js/organisation-verfuegbarkeit.html">Ebenda: Objektverfügbarkeit und this-Kontext</a>
+- <a href="http://molily.de/javascript-core/">Die Grundlagen von JavaScript</a> (dt. Übersetzung)
+</section>
+
+<section data-markdown>
+# OOP-Werkzeuge
+
+- Klassenhierarchien, Mehrfachvererbung, Mixins, Traits, AOP
+- <a href="http://molily.de/weblog/javascript-pseudoklassen">Helfer für simple Vererbung</a>
+- <a href="http://documentcloud.github.com/backbone/#Model-extend">Backbones extend()</a>
+- <a href="http://dojotoolkit.org/documentation/tutorials/1.7/declare/">Dojo</a> / <a href="https://github.com/kriszyp/compose">compose</a>
+- <a href="http://www.prototypejs.org/learn/class-inheritance">PrototypeJS</a> / <a href="http://www.peterkroener.de/mootools-fuer-die-massen-teil-4-klassen-erstellen-und-erweitern/">Mootools</a>
+- <a href="http://molily.de/weblog/yui3-oop">Yahoo YUI</a>
+- <a href="http://soft.vub.ac.be/~tvcutsem/traitsjs/">Traits</a> / <a href="https://github.com/raganwald/method-combinators">Method combinators</a>
+- <a href="http://jsclass.jcoglan.com/">JSClass</a>
+</section>
+
+<!-- ******************************************************************** -->
+
+<section data-markdown>
+# Funktionale Programmierung
+
+- Funktionen als »first-class citizens«
+- Vollwertige Objekte, zur Laufzeit erzeugen
+- Higher-order functions: Funktionen können Parameter und Rückgabewerte sein
+- Anonym oder benannt, Auto-Referenzialität für Rekursion
+- Closures
+- Verschachtelung und »Callback Hell«
+</section>
+
+<section data-markdown>
+# Funktionale Programmierung
+
+<pre><code contenteditable class="javascript">var plusTwo = function (addend) {
+  return addend + 2;
+};
+var createMultiplier = function (f1) {
+  return function (f2) {
+    return f1 * f2;
+  };
+};
+var timesTwo = createMultiplier(2);
+var compose = function (f1, f2) {
+  return function (arg) {
+    return f1(f2(arg));
+  };
+};
+var plusTwoTimesTwo = compose(timesTwo, plusTwo);
+alert(plusTwoTimesTwo(2)); // 8
+</code></pre>
+</section>
+
+<section data-markdown>
+# Zusammenfassung
+
+- Objekte zur Programmstrukturierung
+- Funktionen und Closures für private Daten
+- Funktionale Programmierung
+- Prototypen für Code-Wiederverwendung und Pseudoklassen
+
+<a href="http://molily.de/js/organisation-ueberblick.html#grundpfeiler">Grundpfeiler</a>
+</section>
+
+<!-- ******************************************************************** -->
+
+<section data-markdown>
+# JavaScript-Anwendungen
+
+- Komfortable, leistungsfähige Anwendungen im Browser
+- Gewohnte Interfaces, bessere Bedienbarkeit
+- Synchronisierung mit dem Server im Hintergrund
+- Wenige oder keine Seitenwechsel: Single-Page-Apps
+- JavaScript lädt Daten und rendert das HTML
+- <a href="http://moviepilot.com">moviepilot.com</a>, <a href="http://m.falk.de/">m.falk.de</a>, <a href="http://salon.io">salon.io</a>
+</section>
+
+<section data-markdown>
+# Anwendungsentwicklung
+
+- Entwurfsmuster (design patterns)
+- Wartbarkeit und Skalierbarkeit
+- Performance und Memory-Management
+- Browser-Kompatibilität
+- Unit Testing, TDD
+- Entwicklungsumgebungen
+</section>
+
+<section data-markdown>
+# JavaScript-Anwendungen
+
+- Anwendungsstruktur
+- OOP und funktionale Programmierung
+- DOM Scripting, HTML-Templates
+- Routing und History
+- Modularisierung und Dependencies
+- API-Kommunikation
+- Building und Packaging
+</section>
+
+<section data-markdown>
+# Model View Controller
+
+- Bewährtes Pattern für grafische Benutzeroberflächen
+- Model: Rohdaten und deren Logik
+- View: Darstellung der Daten, User Interface
+- Controller: Benutzeraktionen auswerten, Daten manipulieren
+- Controller erzeugt Model und View, View überwacht das Model
+- <a href="https://github.com/dira/do-mvc-right/blob/master/2013-02-28-mvc-dira.pdf?raw=true">MVC im Kontext von JavaScript verstehen</a>
+</section>
+
+<section data-markdown>
+# Backbone.js (<a href="http://backbonejs.org">backbonejs.org</a>)
+
+- Einfache und kleine Bibliothek (1.500 Zeilen)
+- Bekannt und erprobt
+- Aktive Entwicklung
+- Lesbarer, getesteter Code
+- Kostenlos und Open Source
+- Ähnlich: Spine, CanJS, jQueryMX
+</section>
+
+<section data-markdown>
+# Backbones Abhängigkeiten
+
+- Underscore
+  -  Werkzeugkasten für funktionale und OOP
+- jQuery, Zepto, Ender…
+  - für DOM Scripting und Ajax
+- _.template, Mustache, Handlebars, Haml Coffee…
+  - für HTML-Templates
+</section>
+
+<section data-markdown>
+# Backbones Grundideen
+
+- _Models_ laden, verarbeiten und speichern die Rohdaten
+- _Views_ stellen Daten im DOM dar und erzeugen das User Interface
+- _Router/History_ speichert den Anwendungsstatus in der URL und stellt ihn wieder her
+</section>
+
+<section data-markdown>
+# Backbone-Übersicht
+
+<img src="images/backbone.png" alt="">
+</section>
+
+<section data-markdown>
+# Backbone.Events
+
+- Basis für eine Event-basierte Architektur
+- Event-Handler registrieren und Events feuern
+- Backbones Kernfeature, benutzt von allen anderen Klassen
+- Komponenten kommunizieren über Events miteinander
+- Methoden: `on`, `off`, `trigger`, `listenTo`
+</section>
+
+<section data-markdown>
+# Models
+
+- Abrufen, Verarbeiten und Speichern von Daten
+- Kernfeature: Das `attributes`-Objekt
+- Attribute lesen und Schreiben mit `get()` und `set()`
+- Änderungen an den Attributen erzeugen `change`-Events
+- Synchronisierung über RESTful HTTP mit JSON
+</section>
+
+<section data-markdown>
+# Models
+
+<pre><code contenteditable class="javascript">// Subclassing mit extend()
+var Car = Backbone.Model.extend();
+// Instanz mit vordefinierten Attributen
+var car = new Car({
+  name: 'DeLorean DMC-12',
+  manufactured: 1981
+});
+// Attribut lesen
+console.log( car.get('name') );
+// Attribute schreiben
+car.set('manufactured', 1982);   // Ein Attribut
+car.set({ manufactured: 1982 }); // Mehrere Attribute
+console.log( car.get('manufactured') );
+</code></pre>
+
+<a href="model.html" target="_blank">Demonstration</a>
+</section>
+
+<section data-markdown>
+# Models laden und speichern
+
+- REST mit JSON (einfache HTTP-API)
+- `urlRoot` angeben, z.B. `cars`
+- `model.fetch()` erzeugt ein `GET /cars/:id`
+- `model.save()` erzeugt ein `POST/PUT /cars/:id`
+- `model.destroy()` erzeugt ein `DELETE /cars/:id`
+</section>
+
+<section data-markdown>
+# Models laden und speichern
+
+<pre><code contenteditable class="javascript">var Car = Backbone.Model.extend({
+  urlRoot: '/cars'
+});
+model.fetch().then(successCallback);
+model.save().then(successCallback);
+model.destroy().then(successCallback);
+</code></pre>
+
+<a href="http://wiki.commonjs.org/wiki/Promises/A">Promises</a>
+(<a href="http://api.jquery.com/category/deferred-object/">jQuery Deferred</a>)
+
+<pre><code contenteditable class="javascript">model.fetch().then(success, fail, progress);
+model.fetch().done(success).fail(fail);</code></pre>
+</section>
+
+<section data-markdown>
+# Model-Events überwachen
+
+<pre><code contenteditable class="javascript">car.on('change', function (car, options) {
+  console.log('Some attribute changed');
+});
+car.on('change:manufactured', function (car, newValue, options) {
+  console.log('manufactured changed:', newValue);
+});
+car.set({ manufactured: 1982 });
+</code></pre>
+</section>
+
+<section data-markdown>
+# Collections
+
+- Eine Liste von Models, wrappt ein Array
+- Feuert die Events `add`, `remove` and `reset`
+- List-Helfer von Underscore (`forEach`, `map`, `reduce`, `sort`, `filter`…)
+</section>
+
+<section data-markdown>
+# Collections
+
+<pre><code contenteditable class="javascript">var Car = Backbone.Model.extend();
+
+var Cars = Backbone.Collection.extend({ model: Car });
+
+var cars = new Cars([
+  { name: 'DeLorean DMC-12', manufactured: 1981 },
+  { name: 'Chevrolet Corvette', manufactured: 1953 }
+]);
+alert( cars.at(0).name ); // DeLorean DMC-12
+cars.push({ name: 'VW Scirocco', manufactured: 1974 });
+alert( cars.length ); // 3
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Views
+
+- Eine View verwaltet ein DOM-Element
+- Darstellung der Modeldaten mithilfe eines HTML-Templates (Render-Pattern)
+- Bekommt eine Referenz auf sein Model/seine Collection
+- Verarbeitet DOM-Events (Nutzereingaben)
+- Überwacht Model-Events (Model-View-Binding)
+- Ruft Model-Methoden auf
+</section>
+
+<section data-markdown>
+# Einfache View ohne Template
+
+<pre><code contenteditable class="javascript">var CarView = Backbone.View.extend({
+  initialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
+  render: function () {
+    this.$el.html('Name: ' + this.model.get('name'));
+  }
+});
+var carView = new CarView({
+  model: car,
+  el: $('#car')
+});
+carView.render();
+</code></pre>
+
+<a href="view.html" target="_blank">Demonstration</a>
+</section>
+
+<section data-markdown>
+# Templates
+
+Views übersetzen Modeldaten in HTML mithilfe einer Template-Engine
+
+<table>
+  <tr>
+    <th>Modeldaten:
+    <td><code>{ message: 'Hello World' }</code>
+  <tr>
+    <th>Template:
+    <td><code>&lt;p>{{message}}&lt;/p></code>
+  <tr>
+    <th>Ausgabe:
+    <td><code>&lt;p>Hello World&lt;/p></code>
+</table>
+
+Der erzeugte HTML-Code wird schließlich ins DOM eingefügt
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# View mit Template
+
+<pre><code contenteditable class="javascript">var CarView = Backbone.View.extend({
+  <strong>template: _.template('Name: {{name}}'),</strong>
+  initialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
+  render: function () {
+    this.$el.html(<strong>this.template</strong>(this.model.attributes));
+  }
+});
+var carView = new CarView({
+  model: car,
+  el: $('#car')
+});
+carView.render();
+</code></pre>
+
+<a href="view-template.html" target="_blank">Demonstration</a>
+</section>
+
+<section data-markdown>
+# Model-View-Binding
+
+- Muss bei Backbone manuell eingerichtet werden
+- Eine View hört auf Model-Änderungen und rendert sich neu oder aktualisiert das DOM
+- `this.listenTo(this.model, 'change', this.changeHandler)`
+- Eine View hört auf Nutzereingaben und ruft Model-Methoden auf oder feuert Events beim Model
+
+<a href="binding.html" target="_blank">Demonstration</a>
+</section>
+
+<section data-markdown>
+# Grenzen von Backbone
+
+<q>Backbone.js gives structure … by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</q> – <cite>backbonejs.org</cite>
+
+Das ist alles (plus Routing).
+
+</section>
+
+<section data-markdown>
+# Nachteile von Backbone
+
+- Mit Absicht sehr minimalistisch und offen
+- Überlässt einem viele Entscheidungen, bietet wenig Orientierung
+- Keine Patterns zur Strukturierung der Anwendung auf oberster Ebene
+ Kein klassisches MVC, MVP oder MVVM
+- »There’s More Than One Way To Do It« vs. »Convention Over Configuration«
+- Backbone alleine reicht nicht, ist aber eine gute Grundlage
+</section>
+
+<section data-markdown>
+# Application Frameworks
+
+Auf Basis von Backbone
+
+- <a href="https://github.com/marionettejs/backbone.marionette">Marionette</a>
+- <a href="https://github.com/chaplinjs/chaplin">Chaplin</a>
+- <a href="https://github.com/walmartlabs/thorax">Thorax</a>
+- <a href="https://github.com/addyosmani/aura">Aura</a>
+</section>
+
+<section data-markdown>
+# Chaplin.js (<a href="http://chaplinjs.org">chaplinjs.org</a>)
+
+- Anwendungsarchitektur auf Basis von Backbone
+- Best Practices und Konventionen
+- In CoffeeScript und AMD geschrieben
+- Entstanden aus moviepilot.com
+- Open Source, automatisiert getestet
+</section>
+
+<section data-markdown>
+# Chaplin.js
+
+<img src="images/chaplin-architecture.png" alt="">
+</section>
+
+<section data-markdown>
+# Chaplin-Komponenten (1)
+
+- _Application_ startet die Kernkomponenten
+- _Router_ überwacht URL-Änderungen und prüft, ob Routen auf die URL passen
+- _Layout_ ist die oberste View in der Anwendung, fängt Klicks auf Links ab
+- _Dispatcher_ startet und verwaltet Controller wenn Routen passen
+</section>
+
+<section data-markdown>
+# Chaplin-Komponenten (2)
+
+- _Controller_ erzeugen Models und Views
+- _mediator_ zur Kommunikation via Publish/Subscribe
+- _Composer_ zum Wiederverwenden von Models/Views zwischen Controllern
+- _Regions_ sind benannte Bereiche im UI, die gefüllt werden können (z.B. `main-content`, `sidebar)
+</section>
+
+<section data-markdown>
+# Routing-Ablauf
+
+Router &#x21E2; Dispatcher &rarr; Controller &rarr; Model/View
+
+<table>
+  <tr>
+    <th>&#x21E2;
+    <td>benachrichtigt
+  </tr>
+  <tr>
+    <th>&rarr;
+    <td>erzeugt
+  </tr>
+</table>
+</section>
+
+<section data-markdown>
+# Routen
+
+- Konfigurationsdatei `routes.js`
+- ähnelt `routes.rb` in Rails
+
+<pre><code contenteditable class="javascript">match('', 'homepage#show');</code></pre>
+
+Pfad `/` – Controller `fluffy-bunnies` – Action `index`
+
+<pre><code contenteditable class="javascript">match('fluffy-bunnies', 'fluffy-bunnies#index');
+match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Controller
+
+<pre><code contenteditable class="javascript">var HelloWorldController = Controller.extend({
+
+  show: function (params) {
+    this.model = new HelloWorld();
+    this.view = new HelloWorldView({ model: this.model });
+  }
+
+});
+</code></pre>
+
+</section>
+
+<section data-markdown>
+# Controller
+
+- Erzeugen Models/Collections (<code>this.model</code>/<code>this.collection</code>)
+- Erzeugen die Haupt-View (<code>this.view</code>)
+- Methoden sind Actions
+- Nehmen URL-Parameter entgegen
+</section>
+
+<section data-markdown>
+# Controller
+
+- Es gibt einen aktiven Controller, der für die Haupt-View zuständig ist
+- Wird ein Controller durch eine Route gestartet, wird der vorherige Controller abgebaut. Dabei werden dessen Models und Views abgebaut
+- Models und Views können jedoch kontrolliert übergeben und somit wiederverwendet werden (Composer)
+- Daneben sind persistente Controller möglich
+</section>
+
+<section data-markdown>
+# Asynchronous Module Definition (AMD)
+
+- Modulstandard aus der CommonJS-Community
+- Abhängigkeiten zwischen Klassen deklarieren
+- Abhängigkeitsbaum maschinell auslesen
+- Richtige Ladereihenfolge der Scripte
+- Lazy-Loading von Abhängigkeiten
+- Packaging mehrerer Module in einer Datei
+</section>
+
+<section data-markdown>
+# AMD: `require()`
+
+Module asynchron laden und dann Code ausführen
+
+<pre><code contenteditable class="javascript">require(dependencies:Array, callback:Function)
+</code></pre>
+
+<pre><code contenteditable class="javascript">require(['application'], function(Application) {
+  var app = new Application();
+  app.initialize();
+});</code></pre>
+</section>
+
+<section data-markdown>
+# AMD: `define()`
+
+Module mit Abhängigkeiten definieren
+
+<pre><code contenteditable class="javascript">define(name:String, dependencies:Array, callback:Function)
+define(dependencies:Array, callback:Function) // Name implizit</code></pre>
+
+`controllers/hello_world_controller.js`
+
+<pre><code contenteditable class="javascript">define(
+  [
+    'controllers/base/controller',
+    'models/hello_world',
+    'views/hello_world_view'
+  ],
+  function (Controller, HelloWorld, HelloWorldView) {
+    'use strict';
+    var HelloWorldController = Controller.extend({ … });
+    return HelloWorldController;
+  }
+);</code></pre>
+</section>
+
+<section data-markdown>
+# AMD-Modulformat
+
+- Chaplin besteht aus AMD-Modulen
+- Jede Klasse oder Singleton-Objekt ist ein Modul
+- Eine Klasse pro Datei, ein `define()` pro Datei
+- Der Name ist implizit und entspricht dem Dateipfad ohne Endung, z.B. `controllers/hello_world_controller`
+</section>
+
+<section data-markdown>
+# AMD-Bibliotheken
+
+- Require.js – browserseitiger AMD-Loader
+- curl.js – Alternative
+- r.js – Kommandozeilentool, das Pakete mit mehreren Modulen zusammenstellt
+- Almond.js – browserseitige Minimalimplementierung ohne Loader
+</section>
+
+<section data-markdown>
+# AMD-Beispiel
+
+<a href="amd.html" target="_blank">Demonstration</a>
+</section>
+
+<section data-markdown>
+# Chaplin-Views
+
+- Vordefiniertes `render`
+- `autoRender`
+- `container`
+- `subview`-Methode
+</section>
+
+<section data-markdown>
+# Chaplin-Boilerplate
+
+- Hello-World-Beispiel
+- Application, Routes, Controller, Model, View
+- <a href="https://github.com/chaplinjs/chaplin-boilerplate-plain">github.com/chaplinjs/chaplin-boilerplate-plain</a>
+</section>
+
+<section data-markdown>
+# Beispielanwendung mit Chaplin
+
+- Create, Read, Update, Delete (CRUD)
+- Listenansicht `/cars`
+- Editieransicht `/cars/edit/:id`
+- Formular für neue Einträge `/cars/new`
+- Vorgegebene Daten, kein Server
+</section>
+
+<section data-markdown>
+# Object Disposal
+
+- Definierter Lebenszyklus von Controllern, Models und Views
+- Alle Komponenten bieten eine `dispose`-Methode als expliziter Destructor
+- Garbage Collection ermöglichen zur Vermeidung von Memory-Leaks
+- Besonders wichtig bei Event-basierten Architekturen
+- Chaplin wirft per default alles weg
+</section>
+
+<section>
+# Event-basierte Architektur
+
+- Backbone.Events
+  - Models und Collection
+  - Views
+  - Mediator
+- SyncMachine, Deferred
+</section>
+
+<!--
+<section>
+View
+Subviews anlegen
+Events
+CollectionView
+
+Modelvalidierung
+
+EventMachine/Deferred
+change/sync-Events
+Rückmeldung speichern
+
+Login/Benutzer
+Benutzer hat ACL-Objekt
+Chaplin before-Actions
+Rolle erfordern
+Client Action > Server nachfragen
+MitarbeiterController und davon erben
+Logout-Handling
+  Route back to home
+  Restore view
+
+Große Struktur
+Skalierung
+Wiederverwendbare Module
+Modale Fenster
+Stickit/Formulare
+Abläufe automatisieren
+Chaplin.Model/Chaplin.View
+
+Model-Hierarchien
+Daten zwischen Controllern weitergeben
+Daten persistieren
+Composition
+mediator.user?
+Mediator-Pattern als solches nutzen
+
+</section>
+-->
+
+<!-- ******************************************************************** -->
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        rollingLinks: false,
+
+        theme: 'simple',
+        transition: 'fade',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
