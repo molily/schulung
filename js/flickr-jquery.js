@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
         format: 'json'
       }
     });
-    request.done(showResults);
+    request.then(showResults);
 
     $('#search-submit')
       .prop('disabled', true)
