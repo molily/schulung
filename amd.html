@@ -18,8 +18,11 @@ requirejs.config({
   baseUrl: 'js/',
   // Specify the paths of vendor libraries
   paths: {
-    jquery: 'jquery-1.9.1',
-  }
+    jquery: 'jquery-1.9.1'
+  },
+  // For easier development, disable browser caching
+  // Of course, this should be removed in a production environment
+  urlArgs: 'bust=' +  (new Date()).getTime()
 });
 
 // Load dependencies

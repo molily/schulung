@@ -1178,6 +1178,8 @@ car.on('change:manufactured', function (car, newValue, options) {
 });
 car.set({ manufactured: 1982 });
 </code></pre>
+
+<a href="model-events.html" target="_blank">Demonstration</a>
 </section>
 
 <section data-markdown>
@@ -1199,7 +1201,7 @@ var cars = new Cars([
   { name: 'DeLorean DMC-12', manufactured: 1981 },
   { name: 'Chevrolet Corvette', manufactured: 1953 }
 ]);
-alert( cars.at(0).name ); // DeLorean DMC-12
+alert( cars.at(0).get('name') ); // DeLorean DMC-12
 cars.push({ name: 'VW Scirocco', manufactured: 1974 });
 alert( cars.length ); // 3
 </code></pre>
@@ -1308,7 +1310,7 @@ Das ist alles (plus Routing).
 - Mit Absicht sehr minimalistisch und offen
 - Überlässt einem viele Entscheidungen, bietet wenig Orientierung
 - Keine Patterns zur Strukturierung der Anwendung auf oberster Ebene
- Kein klassisches MVC, MVP oder MVVM
+- Kein klassisches MVC, MVP oder MVVM
 - »There’s More Than One Way To Do It« vs. »Convention Over Configuration«
 - Backbone alleine reicht nicht, ist aber eine gute Grundlage
 </section>
@@ -1322,6 +1324,17 @@ Auf Basis von Backbone
 - <a href="https://github.com/chaplinjs/chaplin">Chaplin</a>
 - <a href="https://github.com/walmartlabs/thorax">Thorax</a>
 - <a href="https://github.com/addyosmani/aura">Aura</a>
+</section>
+
+<section data-markdown>
+# Zusammenfassung
+
+- Backbone als MV*-Framework
+- `var Car = Backbone.Model.extend({…});`
+- `var CarView = Backbone.View.extend({…});`
+- Model-View-Binding
+- Rendering und Templates
+- Backbone bietet keine übergreifende Struktur
 </section>
 
 <section data-markdown>
@@ -1355,7 +1368,7 @@ Auf Basis von Backbone
 - _Controller_ erzeugen Models und Views
 - _mediator_ zur Kommunikation via Publish/Subscribe
 - _Composer_ zum Wiederverwenden von Models/Views zwischen Controllern
-- _Regions_ sind benannte Bereiche im UI, die gefüllt werden können (z.B. `main-content`, `sidebar)
+- _Regions_ sind benannte Bereiche im UI, die gefüllt werden können (z.B. `main-content`, `sidebar`)
 </section>
 
 <section data-markdown>
@@ -1394,11 +1407,13 @@ match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
 <section data-markdown>
 # Controller
 
-<pre><code contenteditable class="javascript">var HelloWorldController = Controller.extend({
+<pre><code contenteditable class="javascript">var CarsController = Controller.extend({
 
+  // cars/1
+  // cars/:id
   show: function (params) {
-    this.model = new HelloWorld();
-    this.view = new HelloWorldView({ model: this.model });
+    this.car = new Car({ id: params.id });
+    this.view = new CarView({ model: this.car });
   }
 
 });
@@ -1422,6 +1437,38 @@ match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
 - Wird ein Controller durch eine Route gestartet, wird der vorherige Controller abgebaut. Dabei werden dessen Models und Views abgebaut
 - Models und Views können jedoch kontrolliert übergeben und somit wiederverwendet werden (Composer)
 - Daneben sind persistente Controller möglich
+</section>
+
+<section data-markdown>
+# Object Disposal
+
+- Definierter Lebenszyklus von Controllern, Models und Views
+- Alle Komponenten bieten eine `dispose`-Methode als expliziter Destructor
+- Garbage Collection ermöglichen zur Vermeidung von Memory-Leaks
+- Besonders wichtig bei Event-basierten Architekturen
+- Chaplin wirft per default alles weg
+</section>
+
+<section data-markdown>
+# Event-basierte Architektur
+
+- Backbone.Events
+  - Models und Collection
+  - Views
+  - Mediator
+- SyncMachine
+- jQuery.Deferred
+</section>
+
+<section data-markdown>
+# Mediator
+
+- Komponenten haben keine Referenzen aufeinander
+- Nutzen ein drittes Objekt, um Daten auszutauschen
+- Publish/Subscribe-Pattern
+- `mediator.publish()`, `mediator.subscribe()`
+- In Models, Collections und Views: `this.subscribeEvent()`, `this.publishEvent()`
+- Zentrale geteilte Objekte: `mediator.user`
 </section>
 
 <section data-markdown>
@@ -1501,47 +1548,29 @@ define(dependencies:Array, callback:Function) // Name implizit</code></pre>
 # Chaplin-Views
 
 - Vordefiniertes `render`
-- `autoRender`
-- `container`
+- `events` und  `listen`
+- Flags: `autoRender` und `container`
 - `subview`-Methode
 </section>
 
 <section data-markdown>
 # Chaplin-Boilerplate
 
+- <a href="https://github.com/chaplinjs/chaplin-boilerplate-plain">github.com/chaplinjs/chaplin-boilerplate-plain</a>
 - Hello-World-Beispiel
 - Application, Routes, Controller, Model, View
-- <a href="https://github.com/chaplinjs/chaplin-boilerplate-plain">github.com/chaplinjs/chaplin-boilerplate-plain</a>
+- Handlebars.js als Templating-Engine
 </section>
 
 <section data-markdown>
 # Beispielanwendung mit Chaplin
 
+- <a href="https://github.com/molily/chaplin-cars">github.com/molily/chaplin-cars</a>
 - Create, Read, Update, Delete (CRUD)
 - Listenansicht `/cars`
 - Editieransicht `/cars/edit/:id`
-- Formular für neue Einträge `/cars/new`
+- Hinzufügen von neuen Einträgen
 - Vorgegebene Daten, kein Server
-</section>
-
-<section data-markdown>
-# Object Disposal
-
-- Definierter Lebenszyklus von Controllern, Models und Views
-- Alle Komponenten bieten eine `dispose`-Methode als expliziter Destructor
-- Garbage Collection ermöglichen zur Vermeidung von Memory-Leaks
-- Besonders wichtig bei Event-basierten Architekturen
-- Chaplin wirft per default alles weg
-</section>
-
-<section>
-# Event-basierte Architektur
-
-- Backbone.Events
-  - Models und Collection
-  - Views
-  - Mediator
-- SyncMachine, Deferred
 </section>
 
 <!--

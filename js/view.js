@@ -9,7 +9,10 @@ var CarView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
   },
   render: function () {
-    this.$el.html('Name: ' + this.model.get('name'));
+   this.$el.html(
+     '<p>Name: ' + this.model.get('name') + '</p>' +
+     '<p>Hergestellt: ' + this.model.get('manufactured') + '</p>'
+     );
   }
 });
 
