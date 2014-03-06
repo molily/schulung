@@ -12,6 +12,11 @@ body {
 #results {
   padding-top: 2em;
   padding-bottom: 1em;
+  list-style: none;
+}
+
+#results li {
+  display: inline-block;
 }
 
 #results img {

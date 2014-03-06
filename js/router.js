@@ -1,7 +1,10 @@
+(function () {
+'use strict';
+
 // Configure Underscore’s template() function
 // to use curly braces as delimiters.
 _.templateSettings = {
-  interpolate: /\{\{(.+?)\}\}/g
+  escape: /\{\{(.+?)\}\}/g
 };
 
 /*
@@ -120,4 +123,4 @@ var CarRouter = Backbone.Router.extend({
 var carRouter = new CarRouter();
 Backbone.history.start();
 
-});
+})();

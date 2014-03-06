@@ -1,7 +1,10 @@
+(function () {
+'use strict';
+
 // Configure Underscore’s template() function
 // to use curly braces as delimiters.
 _.templateSettings = {
-  interpolate: /\{\{(.+?)\}\}/g
+  escape: /\{\{(.+?)\}\}/g
 };
 
 /*
@@ -34,34 +37,99 @@ var Photos = Backbone.Collection.extend({
  * ------------
  */
 
-var PhotosView = Backbone.View.extend({
-
-  template: _.template('<img src="{{media.m}}" alt="">'),
-
-  initialize: function () {
-    this.listenTo(this.collection, 'reset', this.render);
-  },
-
-  render: function () {
-    var html = '';
-    for (var i = 0, l = this.collection.length; i < l; i++) {
-      var model = this.collection.at(i);
-      html += this.template(model.attributes);
-    }
-    this.$el.html(html);
-  }
-
-});
-
 var SearchView = Backbone.View.extend({
+
+  template: _.template(
+    '<p id="search">' +
+    '<label>Suche: <input type="search" class="searchterm" value="flower"></label>' +
+    '<input type="button" class="submit" value="Suchen">' +
+    '</p>'
+  ),
 
   events: {
     'click .submit': 'startSearch'
   },
 
+  initialize: function () {
+    this.listenTo(this.collection, 'sync', this.searchSuccess);
+  },
+
+  render: function () {
+    // Do not pass the collection
+    this.$el.html(this.template());
+  },
+
   startSearch: function () {
-    var value = $('.searchterm').val()
-    this.collection.search(value);
+    this.$('.submit').prop('disabled', true).val('Suche läuft…');
+    var searchTerm = this.$('.searchterm').val();
+    this.collection.search(searchTerm);
+  },
+
+  searchSuccess: function () {
+    this.$('.submit').prop('disabled', false).val('Suchen');
+  }
+
+});
+
+// Collection View
+
+var PhotosView = Backbone.View.extend({
+
+  initialize: function () {
+    this.listenTo(this.collection, 'sync', this.render);
+  },
+
+  render: function () {
+    var $el = this.$el.empty();
+    this.collection.each(function (model) {
+      var view = new PhotoItemView({ model: model });
+      view.render();
+      $el.append(view.el);
+    });
+  }
+
+});
+
+// Item view
+
+var PhotoItemView = Backbone.View.extend({
+
+  tagName: 'li',
+
+  template: _.template(
+    '<a href=""><img src="{{media.m}}" alt=""></a>'
+  ),
+
+  events: {
+    'click': 'showFullPhoto'
+  },
+
+  render: function () {
+    this.$el.html(this.template(this.model.attributes));
+  },
+
+  showFullPhoto: function (event) {
+    event.preventDefault();
+    var fullPhotoView = new FullPhotoView({
+      model: this.model,
+      el: $('#fullPhoto')
+    });
+    fullPhotoView.render();
+  }
+
+});
+
+var FullPhotoView = Backbone.View.extend({
+
+  template: _.template(
+    '<h2>{{title}}</h2>' +
+    '<p class="photo"><img src="{{media.m}}" alt=""></p>' +
+    '<p class="tags">Tags: {{tags}}</p>' +
+    '<p class="link"><a href="{{link}}" target="_blank">{{link}}</a></p>'
+  ),
+
+  render: function () {
+    this.$el.html(this.template(this.model.attributes));
   }
 
 });
@@ -77,8 +145,11 @@ var searchView = new SearchView({
   collection: photos,
   el: $('#search')
 });
+searchView.render();
 
 var photosView = new PhotosView({
   collection: photos,
   el: $('#results')
 });
+
+})();

@@ -3,3 +3,8 @@ body {
   padding: 0;
   font-family: Helvetica, sans-serif;
 }
+
+#car {
+  border: 1px solid black;
+  padding: 0 1em;
+}

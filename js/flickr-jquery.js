@@ -1,10 +1,8 @@
 jQuery(document).ready(function ($) {
+  'use strict';
 
   // Configuration
   var flickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?';
-
-  // The store for the last results
-  var searchResults;
 
   // Setup event handling
   var initialize = function () {
@@ -21,18 +19,17 @@ jQuery(document).ready(function ($) {
       return;
     }
 
-    var term = searchField.val();
+    var searchTerm = searchField.val();
 
-    var request = $.ajax({
+    $.ajax({
       url: flickrUrl,
       dataType: 'json',
       data: {
-        tags: term,
+        tags: searchTerm,
         tagmode: 'all',
         format: 'json'
       }
-    });
-    request.then(showResults);
+    }).then(showResults);
 
     $('#search-submit')
       .prop('disabled', true)
@@ -40,23 +37,25 @@ jQuery(document).ready(function ($) {
   };
 
   var showResults = function (data) {
-    searchResults = data.items;
+    var searchResults = data.items;
 
     $('#search-submit')
       .prop('disabled', false)
       .val('Suchen');
 
     var results = $('#results');
-    var images = [];
-    for (var i = 0; i < searchResults.length; i++) {
+    var elements = [];
+    for (var i = 0, l = searchResults.length; i < l; i++) {
       var photo = searchResults[i];
       var src = photo.media.m;
+      var li = $('<li>');
       var img = $('<img>')
         .attr('src', src)
         .data('photo', photo);
-      images.push(img);
+      li.append(img);
+      elements.push(li);
     }
-    results.empty().append(images);
+    results.html(elements);
   };
 
   var showFullView = function (event) {

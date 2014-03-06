@@ -1,7 +1,7 @@
 // Configure Underscore’s template() function
 // to use curly braces as delimiters.
 _.templateSettings = {
-  interpolate : /\{\{(.+?)\}\}/g
+  escape: /\{\{(.+?)\}\}/g
 };
 
 /*

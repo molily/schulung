@@ -1065,31 +1065,32 @@ alert(plusTwoTimesTwo(2)); // 8
 <section data-markdown>
 # Backbone.js (<a href="http://backbonejs.org">backbonejs.org</a>)
 
-- Einfache und kleine Bibliothek (1.500 Zeilen)
+- Einfache und kleine Bibliothek (1.650 Zeilen)
 - Bekannt und erprobt
 - Aktive Entwicklung
 - Lesbarer, getesteter Code
 - Kostenlos und Open Source
-- Ähnlich: Spine, CanJS, jQueryMX
+- Ähnlich: Spine, CanJS
 </section>
 
 <section data-markdown>
 # Backbones Abhängigkeiten
 
-- Underscore
-  -  Werkzeugkasten für funktionale und OOP
+- Underscore, Lodash…
+  - Werkzeugkasten für funktionale und OOP
 - jQuery, Zepto, Ender…
   - für DOM Scripting und Ajax
-- _.template, Mustache, Handlebars, Haml Coffee…
+- _.template, Mustache, Handlebars…
   - für HTML-Templates
 </section>
 
 <section data-markdown>
 # Backbones Grundideen
 
-- _Models_ laden, verarbeiten und speichern die Rohdaten
+- Die Trennung von Models und Views<br>(Separation of Concerns)
+- _Models_ laden, verarbeiten und speichern die Daten
 - _Views_ stellen Daten im DOM dar und erzeugen das User Interface
-- _Router/History_ speichert den Anwendungsstatus in der URL und stellt ihn wieder her
+- _Router/History_ synchronisiert den Anwendungsstatus mit der URL
 </section>
 
 <section data-markdown>
@@ -1112,10 +1113,11 @@ alert(plusTwoTimesTwo(2)); // 8
 # Models
 
 - Abrufen, Verarbeiten und Speichern von Daten
+- Models sind die »einzige Quelle der Wahrheit«
+- Daten werden nicht im DOM gespeichert
 - Kernfeature: Das `attributes`-Objekt
-- Attribute lesen und Schreiben mit `get()` und `set()`
-- Änderungen an den Attributen erzeugen `change`-Events
-- Synchronisierung über RESTful HTTP mit JSON
+- Attribute lesen und schreiben mit `get()` und `set()`
+- Änderungen erzeugen `change`-Events
 </section>
 
 <section data-markdown>
@@ -1142,7 +1144,7 @@ console.log( car.get('manufactured') );
 <section data-markdown>
 # Models laden und speichern
 
-- REST mit JSON (einfache HTTP-API)
+- Synchronisierung über RESTful HTTP mit JSON
 - `urlRoot` angeben, z.B. `cars`
 - `model.fetch()` erzeugt ein `GET /cars/:id`
 - `model.save()` erzeugt ein `POST/PUT /cars/:id`
@@ -1155,16 +1157,12 @@ console.log( car.get('manufactured') );
 <pre><code contenteditable class="javascript">var Car = Backbone.Model.extend({
   urlRoot: '/cars'
 });
-model.fetch().then(successCallback);
-model.save().then(successCallback);
-model.destroy().then(successCallback);
+model.fetch().then(successCallback, failCallback);
+model.save().then(successCallback, failCallback);
+model.destroy().then(successCallback, failCallback);
 </code></pre>
 
-<a href="http://wiki.commonjs.org/wiki/Promises/A">Promises</a>
-(<a href="http://api.jquery.com/category/deferred-object/">jQuery Deferred</a>)
-
-<pre><code contenteditable class="javascript">model.fetch().then(success, fail, progress);
-model.fetch().done(success).fail(fail);</code></pre>
+<a href="http://promises-aplus.github.io/promises-spec/">Promises</a> / <a href="http://api.jquery.com/category/deferred-object/">jQuery Deferreds</a>
 </section>
 
 <section data-markdown>
@@ -1185,9 +1183,10 @@ car.set({ manufactured: 1982 });
 <section data-markdown>
 # Collections
 
-- Eine Liste von Models, wrappt ein Array
+- Eine Liste von Models
 - Feuert die Events `add`, `remove` and `reset`
-- List-Helfer von Underscore (`forEach`, `map`, `reduce`, `sort`, `filter`…)
+- Kurz gesagt, ein überwachbarer Array
+- Listen-Helfer (`each`, `map`, `reduce`, `sort`, `filter`…)
 </section>
 
 <section data-markdown>
@@ -1211,12 +1210,12 @@ alert( cars.length ); // 3
 <section data-markdown>
 # Views
 
-- Eine View verwaltet ein DOM-Element
-- Darstellung der Modeldaten mithilfe eines HTML-Templates (Render-Pattern)
-- Bekommt eine Referenz auf sein Model/seine Collection
+- Eine View verwaltet ein Element (`this.el`, `this.$el`)
+- Darstellung der Modeldaten (Render-Pattern)
+- Referenz auf ein Model oder eine Collection
 - Verarbeitet DOM-Events (Nutzereingaben)
 - Überwacht Model-Events (Model-View-Binding)
-- Ruft Model-Methoden auf
+- Ruft Model-Methoden auf oder emittiert Events
 </section>
 
 <section data-markdown>
@@ -1224,6 +1223,7 @@ alert( cars.length ); // 3
 
 <pre><code contenteditable class="javascript">var CarView = Backbone.View.extend({
   initialize: function () {
+    // Überwache Model-Änderungen: Neu rendern
     this.listenTo(this.model, 'change', this.render);
   },
   render: function () {
@@ -1243,7 +1243,7 @@ carView.render();
 <section data-markdown>
 # Templates
 
-Views übersetzen Modeldaten in HTML mithilfe einer Template-Engine
+Views übersetzen Modeldaten in HTML mithilfe eines Templates
 
 <table>
   <tr>
@@ -1257,7 +1257,7 @@ Views übersetzen Modeldaten in HTML mithilfe einer Template-Engine
     <td><code>&lt;p>Hello World&lt;/p></code>
 </table>
 
-Der erzeugte HTML-Code wird schließlich ins DOM eingefügt
+Der erzeugte HTML-Code wird ins DOM eingefügt
 </code></pre>
 
 </section>
@@ -1301,7 +1301,6 @@ carView.render();
 <q>Backbone.js gives structure … by providing models with key-value binding and custom events, collections with a rich API of enumerable functions, views with declarative event handling, and connects it all to your existing API over a RESTful JSON interface.</q> – <cite>backbonejs.org</cite>
 
 Das ist alles (plus Routing).
-
 </section>
 
 <section data-markdown>
@@ -1358,17 +1357,17 @@ Auf Basis von Backbone
 
 - _Application_ startet die Kernkomponenten
 - _Router_ überwacht URL-Änderungen und prüft, ob Routen auf die URL passen
-- _Layout_ ist die oberste View in der Anwendung, fängt Klicks auf Links ab
 - _Dispatcher_ startet und verwaltet Controller wenn Routen passen
+- _Controller_ erzeugen Models und Views
 </section>
 
 <section data-markdown>
 # Chaplin-Komponenten (2)
 
-- _Controller_ erzeugen Models und Views
-- _mediator_ zur Kommunikation via Publish/Subscribe
 - _Composer_ zum Wiederverwenden von Models/Views zwischen Controllern
+- _Layout_ ist die oberste View, fängt Klicks auf Links ab
 - _Regions_ sind benannte Bereiche im UI, die gefüllt werden können (z.B. `main-content`, `sidebar`)
+- _mediator_ zur Kommunikation via Publish/Subscribe
 </section>
 
 <section data-markdown>
@@ -1394,14 +1393,13 @@ Router &#x21E2; Dispatcher &rarr; Controller &rarr; Model/View
 - Konfigurationsdatei `routes.js`
 - ähnelt `routes.rb` in Rails
 
-<pre><code contenteditable class="javascript">match('', 'homepage#show');</code></pre>
+<pre><code contenteditable class="javascript">match('', 'homepage#show');
+match('cars', 'cars#index');
+match('cars/:id', 'cars#show');</code></pre>
 
-Pfad `/` – Controller `fluffy-bunnies` – Action `index`
-
-<pre><code contenteditable class="javascript">match('fluffy-bunnies', 'fluffy-bunnies#index');
-match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
-</code></pre>
-
+- Pfad `/` – Controller `homepage` – Action `show`
+- Pfad `/cars` – Controller `cars` – Action `index`
+- Pfad `/cars/:id` – Controller `cars` – Action `show`
 </section>
 
 <section data-markdown>
@@ -1424,8 +1422,8 @@ match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
 <section data-markdown>
 # Controller
 
-- Erzeugen Models/Collections (<code>this.model</code>/<code>this.collection</code>)
-- Erzeugen die Haupt-View (<code>this.view</code>)
+- Erzeugen Models/Collections (`this.model`/`this.collection`)
+- Erzeugen die Haupt-View (`this.view`)
 - Methoden sind Actions
 - Nehmen URL-Parameter entgegen
 </section>
@@ -1433,38 +1431,27 @@ match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
 <section data-markdown>
 # Controller
 
-- Es gibt einen aktiven Controller, der für die Haupt-View zuständig ist
-- Wird ein Controller durch eine Route gestartet, wird der vorherige Controller abgebaut. Dabei werden dessen Models und Views abgebaut
-- Models und Views können jedoch kontrolliert übergeben und somit wiederverwendet werden (Composer)
-- Daneben sind persistente Controller möglich
+- Ein aktiven Controller, der die Haupt-View erzeugt
+- Beim Starten eines Controllers wird der vorherige Controller mitsamt Models und Views abgebaut
+- Models und Views können kontrolliert wiederverwendet werden (Composer)
+- Persistente Controller sind möglich
 </section>
 
 <section data-markdown>
 # Object Disposal
 
 - Definierter Lebenszyklus von Controllern, Models und Views
-- Alle Komponenten bieten eine `dispose`-Methode als expliziter Destructor
+- Alle Komponenten haben eine `dispose`-Methode als Destructor
 - Garbage Collection ermöglichen zur Vermeidung von Memory-Leaks
-- Besonders wichtig bei Event-basierten Architekturen
+- Wichtig bei Event-basierten Architekturen
 - Chaplin wirft per default alles weg
-</section>
-
-<section data-markdown>
-# Event-basierte Architektur
-
-- Backbone.Events
-  - Models und Collection
-  - Views
-  - Mediator
-- SyncMachine
-- jQuery.Deferred
 </section>
 
 <section data-markdown>
 # Mediator
 
-- Komponenten haben keine Referenzen aufeinander
-- Nutzen ein drittes Objekt, um Daten auszutauschen
+- MVC-Komponenten haben keine Referenzen aufeinander
+- Ein drittes Objekt zum Datenaustausch
 - Publish/Subscribe-Pattern
 - `mediator.publish()`, `mediator.subscribe()`
 - In Models, Collections und Views: `this.subscribeEvent()`, `this.publishEvent()`
@@ -1472,9 +1459,9 @@ match('fluffy-bunnies/:id', 'fluffy-bunnies#show');
 </section>
 
 <section data-markdown>
-# Asynchronous Module Definition (AMD)
+# Modularisierung
 
-- Modulstandard aus der CommonJS-Community
+- Chaplin nutzt die Modulstandards CommonJS bzw. AMD
 - Abhängigkeiten zwischen Klassen deklarieren
 - Abhängigkeitsbaum maschinell auslesen
 - Richtige Ladereihenfolge der Scripte
@@ -1521,21 +1508,23 @@ define(dependencies:Array, callback:Function) // Name implizit</code></pre>
 </section>
 
 <section data-markdown>
-# AMD-Modulformat
+# AMD-Modulkonventionen
 
-- Chaplin besteht aus AMD-Modulen
+- Chaplin besteht aus Modulen
 - Jede Klasse oder Singleton-Objekt ist ein Modul
 - Eine Klasse pro Datei, ein `define()` pro Datei
-- Der Name ist implizit und entspricht dem Dateipfad ohne Endung, z.B. `controllers/hello_world_controller`
+- Der Name ist implizit und entspricht dem Dateipfad ohne Endung,<br>z.B. `controllers/hello_world_controller`
 </section>
 
 <section data-markdown>
 # AMD-Bibliotheken
 
-- Require.js – browserseitiger AMD-Loader
-- curl.js – Alternative
-- r.js – Kommandozeilentool, das Pakete mit mehreren Modulen zusammenstellt
-- Almond.js – browserseitige Minimalimplementierung ohne Loader
+- <a href="http://requirejs.org/">Require.js</a> – browserseitiger AMD-Loader
+- <a href="https://github.com/cujojs/curl">curl.js – Alternative</a>
+- <a href="http://requirejs.org/docs/optimization.html">r.js</a> – Pakete aus AMD-Modulen schnüren
+- <a href="https://github.com/jrburke/almond">Almond.js</a> – browserseitige Minimalimplementierung ohne Loader
+- <a href="http://browserify.org/">Browserify</a> – Pakete aus CommonJS-Modulen schnüren
+
 </section>
 
 <section data-markdown>
@@ -1547,10 +1536,10 @@ define(dependencies:Array, callback:Function) // Name implizit</code></pre>
 <section data-markdown>
 # Chaplin-Views
 
-- Vordefiniertes `render`
-- `events` und  `listen`
-- Flags: `autoRender` und `container`
-- `subview`-Methode
+- Vordefinierte `render`-Methode
+- Deklaratives Event-Handling:<br>`events` und `listen`
+- Optionen: `autoRender` und `container`
+- Subviews mit der `subview`-Methode
 </section>
 
 <section data-markdown>
@@ -1567,52 +1556,10 @@ define(dependencies:Array, callback:Function) // Name implizit</code></pre>
 
 - <a href="https://github.com/molily/chaplin-cars">github.com/molily/chaplin-cars</a>
 - Create, Read, Update, Delete (CRUD)
-- Listenansicht `/cars`
-- Editieransicht `/cars/edit/:id`
+- Listenansicht, Einzelansicht, Editieransicht
 - Hinzufügen von neuen Einträgen
-- Vorgegebene Daten, kein Server
+- Vorgegebene Daten, kein Server, Persistenz mit `localStorage`
 </section>
-
-<!--
-<section>
-View
-Subviews anlegen
-Events
-CollectionView
-
-Modelvalidierung
-
-EventMachine/Deferred
-change/sync-Events
-Rückmeldung speichern
-
-Login/Benutzer
-Benutzer hat ACL-Objekt
-Chaplin before-Actions
-Rolle erfordern
-Client Action > Server nachfragen
-MitarbeiterController und davon erben
-Logout-Handling
-  Route back to home
-  Restore view
-
-Große Struktur
-Skalierung
-Wiederverwendbare Module
-Modale Fenster
-Stickit/Formulare
-Abläufe automatisieren
-Chaplin.Model/Chaplin.View
-
-Model-Hierarchien
-Daten zwischen Controllern weitergeben
-Daten persistieren
-Composition
-mediator.user?
-Mediator-Pattern als solches nutzen
-
-</section>
--->
 
 <!-- ******************************************************************** -->
 

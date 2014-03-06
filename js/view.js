@@ -1,3 +1,6 @@
+(function () {
+'use strict';
+
 /* Model class */
 
 var Car = Backbone.Model.extend();
@@ -12,7 +15,7 @@ var CarView = Backbone.View.extend({
    this.$el.html(
      '<p>Name: ' + this.model.get('name') + '</p>' +
      '<p>Hergestellt: ' + this.model.get('manufactured') + '</p>'
-     );
+   );
   }
 });
 
@@ -31,3 +34,5 @@ var carView = new CarView({
 /* Initial rendering */
 
 carView.render();
+
+})();

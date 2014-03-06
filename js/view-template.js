@@ -1,7 +1,10 @@
+(function () {
+'use strict';
+
 // Configure Underscore’s template() function
 // to use curly braces as delimiters.
 _.templateSettings = {
-  interpolate: /\{\{(.+?)\}\}/g
+  escape: /\{\{(.+?)\}\}/g
 };
 
 /* Model class */
@@ -39,3 +42,5 @@ var carView = new CarView({
 /* Initial rendering */
 
 carView.render();
+
+})();
